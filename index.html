@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Art Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>Digital Art Gallery</h1>
+  <p>150 Works · Generative &amp; Digital</p>
+</header>
+
+<div class="filters" id="filters">
+  <button class="filter-btn active" data-genre="all">All Works</button>
+  <button class="filter-btn" data-genre="abstract">Abstract</button>
+  <button class="filter-btn" data-genre="geometric">Geometric</button>
+  <button class="filter-btn" data-genre="landscape">Landscape</button>
+  <button class="filter-btn" data-genre="portrait">Portrait</button>
+  <button class="filter-btn" data-genre="cosmic">Cosmic</button>
+  <button class="filter-btn" data-genre="fluid">Fluid</button>
+</div>
+
+<div class="view-controls">
+  <span class="count-label">150 artworks</span>
+  <div class="view-toggle">
+    <button class="view-btn active" id="btn-walk">Walk-Through</button>
+    <button class="view-btn" id="btn-grid">Grid View</button>
+  </div>
+</div>
+
+<!-- WALK-THROUGH VIEW -->
+<div id="view-walk" class="gallery-track">
+  <div class="section-label">Cinematic Walk-Through · Hover to Pause</div>
+  <div class="walk-container">
+    <div class="walk-row" id="walk-row"></div>
+  </div>
+</div>
+
+<!-- GRID VIEW -->
+<div id="view-grid" class="grid-gallery" style="display:none"></div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button id="lightbox-close" aria-label="Close">✕</button>
+  <canvas id="lb-canvas" width="600" height="600"></canvas>
+  <div id="lightbox-info">
+    <h2 id="lb-title"></h2>
+    <p id="lb-artist"></p>
+  </div>
+</div>
+
+<footer>© 2026 Digital Art Gallery · All artworks are algorithmically generated</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

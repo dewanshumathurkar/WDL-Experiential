@@ -1,0 +1,278 @@
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --accent: #c9a96e;
+  --accent2: #7c6af0;
+  --text: #f0ede8;
+  --muted: #888;
+  --card-w: 260px;
+  --card-h: 320px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Cormorant Garamond', serif;
+  overflow-x: hidden;
+}
+
+/* ── HEADER ── */
+header {
+  text-align: center;
+  padding: 5rem 2rem 3rem;
+  position: relative;
+}
+header::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 1px;
+  background: var(--accent);
+  margin: 1.5rem auto 0;
+}
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--text);
+}
+header p {
+  font-size: 1.1rem;
+  color: var(--muted);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 0.75rem;
+  font-weight: 300;
+}
+
+/* ── FILTER BAR ── */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1.5rem 2rem 2.5rem;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  background: transparent;
+  border: 1px solid #333;
+  color: var(--muted);
+  padding: 0.4rem 1.2rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 0;
+}
+.filter-btn:hover, .filter-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── GALLERY WALK-THROUGH ── */
+.gallery-track {
+  padding: 2rem 4vw 5rem;
+}
+
+/* Walk-through: horizontal cinematic scroll */
+.walk-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+  padding-bottom: 1rem;
+}
+.walk-container::-webkit-scrollbar { height: 3px; }
+.walk-container::-webkit-scrollbar-track { background: transparent; }
+.walk-container::-webkit-scrollbar-thumb { background: var(--accent); }
+
+.walk-row {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem 0 2rem;
+  width: max-content;
+  animation: walkThrough 120s linear infinite;
+  animation-play-state: running;
+}
+.walk-row:hover { animation-play-state: paused; }
+
+@keyframes walkThrough {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── ARTWORK CARD ── */
+.artwork-card {
+  position: relative;
+  width: var(--card-w);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+}
+.artwork-card:hover { transform: translateY(-12px) scale(1.02); }
+
+figure {
+  position: relative;
+  width: 100%;
+  height: var(--card-h);
+  overflow: hidden;
+  border: 1px solid #1e1e2a;
+}
+figure canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── FIGCAPTION HOVER REVEAL ── */
+figcaption {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(10,10,15,0.97) 60%, transparent);
+  padding: 2.5rem 1rem 1rem;
+  transform: translateY(100%);
+  transition: transform 0.45s cubic-bezier(0.23,1,0.32,1);
+}
+figure:hover figcaption { transform: translateY(0); }
+
+figcaption h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+figcaption .artist {
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+figcaption .meta {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+/* Card number badge */
+.card-num {
+  position: absolute;
+  top: 10px; right: 10px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.25);
+  z-index: 2;
+}
+
+/* ── SECTION LABELS ── */
+.section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+  padding-left: 0.5rem;
+  border-left: 2px solid var(--accent);
+}
+
+/* ── GRID VIEW (alternate layout) ── */
+.grid-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 0 4vw 6rem;
+}
+.grid-gallery .artwork-card { width: 100%; }
+.grid-gallery figure { height: 280px; }
+
+/* ── LIGHTBOX ── */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+#lightbox.open { display: flex; }
+#lightbox canvas {
+  max-width: 80vmin;
+  max-height: 80vmin;
+  border: 1px solid #2a2a35;
+}
+#lightbox-info { text-align: center; }
+#lightbox-info h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+}
+#lightbox-info p {
+  color: var(--accent);
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+#lightbox-close {
+  position: fixed;
+  top: 1.5rem; right: 2rem;
+  background: none; border: none;
+  color: var(--muted);
+  font-size: 2rem;
+  cursor: pointer;
+  font-family: serif;
+  line-height: 1;
+  transition: color 0.2s;
+}
+#lightbox-close:hover { color: var(--text); }
+
+/* ── VIEW TOGGLE ── */
+.view-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4vw 1.5rem;
+}
+.view-toggle {
+  display: flex;
+  gap: 0.5rem;
+}
+.view-btn {
+  background: none;
+  border: 1px solid #333;
+  color: var(--muted);
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+.view-btn.active, .view-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.count-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── FOOTER ── */
+footer {
+  text-align: center;
+  padding: 3rem;
+  border-top: 1px solid #1a1a25;
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
